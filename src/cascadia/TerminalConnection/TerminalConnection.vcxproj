@@ -11,6 +11,8 @@
     <ProjectGuid>{CA5CAD1A-C46D-4588-B1C0-40F31AE9100B}</ProjectGuid>
     <ProjectName>TerminalConnection</ProjectName>
     <RootNamespace>Microsoft.Terminal.TerminalConnection</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Platform)' == 'x64'">
     <VcpkgTriplet Condition="'$(VcpkgTriplet)' == ''">x64-windows</VcpkgTriplet>

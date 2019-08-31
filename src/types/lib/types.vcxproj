@@ -41,6 +41,9 @@
     <ClInclude Include="..\utils.hpp" />
     <ClInclude Include="..\WindowUiaProviderBase.hpp" />
   </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
   <PropertyGroup>
     <ProjectGuid>{18D09A24-8240-42D6-8CB6-236EEE820263}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

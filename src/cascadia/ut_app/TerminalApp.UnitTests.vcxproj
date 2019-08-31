@@ -2,12 +2,10 @@
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(SolutionDir)\common.openconsole.props" Condition="'$(OpenConsoleDir)'==''" />
   <Import Project="$(OpenConsoleDir)\src\common.build.pre.props" />
-
   <!-- ========================= Headers ======================== -->
   <ItemGroup>
     <ClInclude Include="precomp.h" />
   </ItemGroup>
-
   <!-- ========================= Cpp Files ======================== -->
   <ItemGroup>
     <ClCompile Include="JsonTests.cpp" />
@@ -20,13 +18,11 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
-
   <!-- ========================= Project References ======================== -->
   <ItemGroup>
     <ProjectReference Include="$(OpenConsoleDir)\src\cascadia\TerminalApp\lib\TerminalAppLib.vcxproj" />
     <ProjectReference Include="$(OpenConsoleDir)\src\types\lib\types.vcxproj" />
   </ItemGroup>
-
   <!-- ========================= Globals ======================== -->
   <PropertyGroup>
     <ProjectGuid>{CA5CAD1A-9333-4D05-B12A-1905CBF112F9}</ProjectGuid>
@@ -35,15 +31,13 @@
     <ProjectName>UnitTests_TerminalApp</ProjectName>
     <TargetName>Terminal.App.Unit.Tests</TargetName>
     <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
-
   <!-- ====================== Compiler & Linker Flags ===================== -->
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>..;$(OpenConsoleDir)\dep\jsoncpp\json;$(OpenConsoleDir)src\inc;$(OpenConsoleDir)src\inc\test;$(WinRT_IncludePath)\..\cppwinrt\winrt;"$(OpenConsoleDir)\src\cascadia\TerminalApp\lib\Generated Files";%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile>precomp.h</PrecompiledHeaderFile>
-
       <!-- Manually disable unreachable code warning, because jconcpp has a ton of that. -->
       <DisableSpecificWarnings>4702;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
@@ -51,7 +45,6 @@
       <AdditionalDependencies>WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-
   <PropertyGroup>
     <GenerateManifest>true</GenerateManifest>
     <EmbedManifest>true</EmbedManifest>
@@ -59,14 +52,12 @@
   <ItemGroup>
     <Manifest Include="TerminalApp.Unit.Tests.manifest" />
   </ItemGroup>
-
   <!-- Careful reordering these. Some default props (contained in these files) are order sensitive. -->
   <Import Project="$(OpenConsoleDir)src\common.build.dll.props" />
   <Import Project="$(OpenConsoleDir)src\common.build.post.props" />
   <Import Project="$(OpenConsoleDir)src\common.build.tests.props" />
-
   <PropertyGroup>
-  <!-- Manually change our outdir to be in a subdirectory. We don't really want
+    <!-- Manually change our outdir to be in a subdirectory. We don't really want
     to put our output in the bin root, because if we do, we'll copy
     TerminalApp.winmd to the bin root, and then every subsequent mdmerge step
     (in _any_ cppwinrt project) will automatically try to pick up
@@ -75,21 +66,19 @@
     <OutDir>$(OpenConsoleDir)\bin\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(OpenConsoleDir)\obj\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
-
   <PropertyGroup>
-    <_CppWinrtBinRoot>&quot;$(OpenConsoleDir)$(Platform)\$(Configuration)\&quot;</_CppWinrtBinRoot>
+    <_CppWinrtBinRoot>"$(OpenConsoleDir)$(Platform)\$(Configuration)\"</_CppWinrtBinRoot>
     <!-- From Microsoft.UI.Xaml.targets -->
     <Native-Platform Condition="'$(Platform)' == 'Win32'">x86</Native-Platform>
     <Native-Platform Condition="'$(Platform)' != 'Win32'">$(Platform)</Native-Platform>
-    <_MUXBinRoot>&quot;$(OpenConsoleDir)packages\Microsoft.UI.Xaml.2.2.190611001-prerelease\runtimes\win10-$(Native-Platform)\native\&quot;</_MUXBinRoot>
+    <_MUXBinRoot>"$(OpenConsoleDir)packages\Microsoft.UI.Xaml.2.2.190611001-prerelease\runtimes\win10-$(Native-Platform)\native\"</_MUXBinRoot>
   </PropertyGroup>
-
   <ItemDefinitionGroup>
     <PreBuildEvent>
       <!-- Manually copy the Windows Terminal manifest to our project directory,
       so we only need to have one version for the entire solution. -->
       <Command>
-        (xcopy /Y &quot;$(OpenConsoleDir)src\cascadia\WindowsTerminal\WindowsTerminal.manifest&quot; &quot;$(OpenConsoleDir)src\cascadia\ut_app\TerminalApp.Unit.Tests.manifest*&quot; )
+        (xcopy /Y "$(OpenConsoleDir)src\cascadia\WindowsTerminal\WindowsTerminal.manifest" "$(OpenConsoleDir)src\cascadia\ut_app\TerminalApp.Unit.Tests.manifest*" )
       </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -107,21 +96,19 @@
       -->
       <Command>
         echo OutDir=$(OutDir)
-        (xcopy /Y &quot;$(OpenConsoleDir)src\cascadia\ut_app\TerminalApp.Unit.Tests.manifest&quot; &quot;$(OutDir)\TerminalApp.Unit.Tests.manifest*&quot; )
-        (xcopy /Y &quot;$(OpenConsoleDir)src\cascadia\ut_app\TerminalApp.Unit.Tests.AppxManifest.xml&quot; &quot;$(OutDir)\TerminalApp.Unit.Tests.AppxManifest.xml*&quot; )
+        (xcopy /Y "$(OpenConsoleDir)src\cascadia\ut_app\TerminalApp.Unit.Tests.manifest" "$(OutDir)\TerminalApp.Unit.Tests.manifest*" )
+        (xcopy /Y "$(OpenConsoleDir)src\cascadia\ut_app\TerminalApp.Unit.Tests.AppxManifest.xml" "$(OutDir)\TerminalApp.Unit.Tests.AppxManifest.xml*" )
 
-        (xcopy /Y $(_CppWinrtBinRoot)TerminalConnection\TerminalConnection.dll &quot;$(OutDir)\TerminalConnection.dll*&quot; )
-        (xcopy /Y $(_CppWinrtBinRoot)TerminalSettings\TerminalSettings.dll &quot;$(OutDir)\TerminalSettings.dll*&quot; )
-        (xcopy /Y $(_CppWinrtBinRoot)TerminalControl\TerminalControl.dll &quot;$(OutDir)\TerminalControl.dll*&quot; )
+        (xcopy /Y $(_CppWinrtBinRoot)TerminalConnection\TerminalConnection.dll "$(OutDir)\TerminalConnection.dll*" )
+        (xcopy /Y $(_CppWinrtBinRoot)TerminalSettings\TerminalSettings.dll "$(OutDir)\TerminalSettings.dll*" )
+        (xcopy /Y $(_CppWinrtBinRoot)TerminalControl\TerminalControl.dll "$(OutDir)\TerminalControl.dll*" )
 
-        (xcopy /Y $(_MUXBinRoot)Microsoft.UI.Xaml.dll &quot;$(OutDir)\Microsoft.UI.Xaml.dll*&quot; )
-        (xcopy /Y $(_MUXBinRoot)Microsoft.UI.Xaml.pri &quot;$(OutDir)\Microsoft.UI.Xaml.pri*&quot; )
+        (xcopy /Y $(_MUXBinRoot)Microsoft.UI.Xaml.dll "$(OutDir)\Microsoft.UI.Xaml.dll*" )
+        (xcopy /Y $(_MUXBinRoot)Microsoft.UI.Xaml.pri "$(OutDir)\Microsoft.UI.Xaml.pri*" )
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-
   <!-- Import this set of targets that fixes a VS bug that manifests when using
   the TerminalAppLib project -->
   <Import Project="../TerminalApp/FixVisualStudioBug.targets" />
-
 </Project>
